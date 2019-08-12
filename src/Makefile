@@ -1,7 +1,7 @@
 PROGRAMS = tendril
 TESTS = cell_test board_test
 
-COMPILE = g++ -Wall -std=c++11
+COMPILE = g++ -Wall -std=c++17 -Og
 
 all: $(PROGRAMS)
 
