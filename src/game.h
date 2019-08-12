@@ -16,7 +16,7 @@ enum class PlaceResult {
 
 class Game {
 public:
-    Game();
+    explicit Game(unsigned boardSize = 10);
 
     PlaceResult placeTendril(Player player, Position position);
 

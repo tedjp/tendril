@@ -59,8 +59,8 @@ static void clearDeadCells(GameBoard& board, vector<bool> okCells) {
 
 } // anon
 
-Game::Game():
-    board_(10),
+Game::Game(unsigned boardSize):
+    board_(boardSize),
     blueCortex_(0, 0),
     redCortex_(9, 9)
 {}
