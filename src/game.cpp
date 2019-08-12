@@ -24,18 +24,16 @@ static bool playerHoldsCell(Player player, Cell cell) {
         return isRed(cell);
 }
 
-static unsigned offset(const GameBoard& board, Position position) {
-    // XXX: I think board numbers col * side + row. This is probably better:
-    // left-to-right, top-to-bottom
-    return position.row() * board.sideSize() + position.col();
+static unsigned okCellsOffset(unsigned sideSize, Position position) {
+    return position.row() * sideSize + position.col();
 }
 
 static void markCellsReachableByPlayer(GameBoard& board, Player player, vector<bool>& okCells, Position startPosition) {
     if (playerHoldsCell(player, board.cellAt(startPosition))) {
-        if (okCells[offset(board, startPosition)] == true)
+        if (okCells[okCellsOffset(board.getSideSize(), startPosition)] == true)
             return; // Already processed this cell.
 
-        okCells[offset(board, startPosition)] = true;
+        okCells[okCellsOffset(board.getSideSize(), startPosition)] = true;
     } else {
         return; // this cell not a matching color. stop looking from here.
     }
@@ -52,13 +50,10 @@ static void markCellsReachableByPlayer(GameBoard& board, Player player, vector<b
 }
 
 static void clearDeadCells(GameBoard& board, vector<bool> okCells) {
-    size_t cell_idx = 0;
-
     board.forEachCell(
-            [&okCells, &cell_idx](Cell& cell) {
-                if (okCells[cell_idx] == false)
+            [&okCells, sideSize = board.getSideSize()](Cell& cell, Position position) {
+                if (okCells[okCellsOffset(sideSize, position)] == false)
                     cell.clear();
-                ++cell_idx;
             });
 }
 

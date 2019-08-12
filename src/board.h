@@ -68,12 +68,13 @@ public:
         return cells_.size();
     }
 
-    void forEachCell(std::function<void(Cell&)> callback) {
+    void forEachCell(std::function<void(Cell&, Position)> callback) {
         const auto maxSide = getSideSize();
 
         for (unsigned row = 0; row < maxSide; ++row) {
             for (unsigned col = 0; col < maxSide; ++col) {
-                callback(cellAt(Position(col, row)));
+                Position pos(col, row);
+                callback(cellAt(pos), pos);
             }
         }
     }
