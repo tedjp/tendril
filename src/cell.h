@@ -31,6 +31,8 @@ public:
     // This might be excessive
     bool isRed() const { return static_cast<Color>(color_) == Color::Red; }
     bool isBlue() const { return static_cast<Color>(color_) == Color::Blue; }
+    bool isTendril() const { return static_cast<Content>(content_) == Content::Tendril; }
+    bool isCortex() const { return static_cast<Content>(content_) == Content::Cortex; }
 
     void setState(State state) {
         content_ = static_cast<unsigned>(state.content);
