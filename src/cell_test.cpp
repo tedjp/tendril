@@ -7,7 +7,7 @@ using namespace std;
 int main(void) {
     Cell c;
 
-    assert(c.getState() == Cell::State::Empty);
+    assert(c.isEmpty());
 
     return 0;
 }

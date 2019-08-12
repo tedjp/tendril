@@ -6,22 +6,14 @@ namespace {
 
 using GameBoard = Board<Cell>;
 
-// XXX: Refactor so cell is empty/red/blue regardless of state.
-static bool isRed(const Cell& c) {
-    auto state = c.getState();
-    return state == Cell::State::RedTendril || state == Cell::State::RedCortex;
-}
-
-static bool isBlue(const Cell& c) {
-    auto state = c.getState();
-    return state == Cell::State::BlueTendril || state == Cell::State::BlueCortex;
-}
 
 static bool playerHoldsCell(Player player, Cell cell) {
     if (player == Player::Blue)
-        return isBlue(cell);
+        return cell.isBlue();
+    else if (player == Player::Red)
+        return cell.isRed();
     else
-        return isRed(cell);
+        return false;
 }
 
 static unsigned okCellsOffset(unsigned sideSize, Position position) {

@@ -51,6 +51,10 @@ public:
         return cells_.at(pos.row() * side_size_ + pos.col());
     }
 
+    CellT& operator[](Position pos) {
+        return cellAt(pos);
+    }
+
     Row operator[](unsigned row) {
         return Row(*this, row);
     }

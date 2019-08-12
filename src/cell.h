@@ -4,20 +4,42 @@
 
 class Cell {
 public:
-    enum class State: uint8_t {
-        Empty,
-        RedTendril,
-        BlueTendril,
-        RedCortex,
-        BlueCortex,
+    enum class Color: uint8_t {
+        None,
+        Red,
+        Blue,
     };
 
-    Cell() = default;
+    enum class Content: uint8_t {
+        Empty,
+        Tendril,
+        Cortex,
+    };
 
-    State getState() const { return state_; }
-    void setState(State state) { state_ = state; }
-    void clear() { setState(State::Empty); }
+    struct State {
+        Content content;
+        Color color;
+    };
+
+    Cell();
+
+    Color getColor() const { return static_cast<Color>(color_); }
+    Content getContent() const { return static_cast<Content>(content_); }
+    State getState() const { return State{getContent(), getColor()}; }
+
+    bool isEmpty() const { return static_cast<Content>(content_) == Content::Empty; }
+    // This might be excessive
+    bool isRed() const { return static_cast<Color>(color_) == Color::Red; }
+    bool isBlue() const { return static_cast<Color>(color_) == Color::Blue; }
+
+    void setState(State state) {
+        content_ = static_cast<unsigned>(state.content);
+        color_ = static_cast<unsigned>(state.color);
+    }
+
+    void clear();
 
 private:
-    State state_ = State::Empty;
+    unsigned color_: 3;
+    unsigned content_: 3;
 };

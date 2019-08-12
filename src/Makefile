@@ -6,7 +6,7 @@ COMPILE = g++ -Wall -std=c++17 -Og
 all: $(PROGRAMS)
 
 clean:
-	rm -f $(PROGRAMS) $(TESTS)
+	rm -f $(PROGRAMS) $(TESTS) *.o
 
 check: $(TESTS)
 	set -e; \
