@@ -34,17 +34,22 @@ Here's an AI algorithm:
 
 This core game format is extensible in all kinds of directions. It can be text-based or graphical, it can be player-vs-player or player-vs-computer with varying levels of AI. It can be multiplayer with more than two players. The game grid can be scaled up. It can have powerups (more on that below). The AI strategy can be adjusted (aggressive/passive/random/cheat/?). It can be turn based or continuous. There can be animation or simple graphics. There can be sound. It can be played over a network with a game server that holds the full game state and only reveals what each player can see.
 
-## Mutations
+## Mutations and mutagens
 
-Powerups are called *mutations*.
+Powerups are called *mutagens*. They cause *mutations* to the cells that reach them.
 
-- Every 3(?) turns each organism has a random mutation at a random location on one of their tendrils.
-- Possible mutations:
-  - Photocell: Grants vision of the blocks adjacent to the mutated cell.
-  - Claw: Attacks an adjacent cell automatically at the start of the player's turn (randomly selected adjacent cell which could be their own tendril!).
-  - Rot: The cell dies. (Maybe on next turn for visibility.)
-  - Armor (thematic name?): The cell is granted one point of armor. Upon hit, the opponent will be informed that they hit an armored cell. The armor is destroyed but the attacker does not grow a new cell.
+After choosing start locations, the map will be sparsely populated with *mutagens*. These are power-ups,
+like apples in *Snake*. Mutagen locations are visible through the fog-of-war (ie. immediately).
+They provide intermediate goals that drive conflict, and should be no more dense than one-in-25,
+in other words one mutagen on a 5x5 grid or up to four on a 10x10 grid. (If random spawning of mutagens
+ends up feeling lopsided, they can be randomly-and-symmetrically placed. For example randomly place one and mirror
+it twice across the midlines of the game board resulting in four.)
 
-Rather than mutations occurring randomly, mutagens could be placed sparsely around the game board and need to be stumbled upon, causing immediate mutation of the cell that lands on it.
+Mutations:
+  - Photocell: Grants vision of the blocks immediately adjacent to the mutated cell.
+  - Claw: Attacks an adjacent cell automatically at the start of the player's turn (always tries to hit a random non-self cell, but if surrounded, will attack and kill a cell from its own organism).
+  - Hyperkeratosis: The cell is granted one point of armor. Upon hit, the opponent will be informed that they hit an armored cell. The armor is destroyed but the attacker does not grow a new cell and is not granted the on-hit extra turn. (Akin to armor in fighting games.)
 
-(Cortex isn't really the right term anatomically, it's more of a cerebellum, but cortex sounds cooler.)
+## Etymology
+
+Cortex isn't really the right term anatomically, it's more of a cerebellum, but cortex sounds cooler.
