@@ -51,6 +51,10 @@ public:
         return cells_.at(pos.row() * side_size_ + pos.col());
     }
 
+    const CellT& cellAt(Position pos) const {
+        return cells_.at(pos.row() * side_size_ + pos.col());
+    }
+
     CellT& operator[](Position pos) {
         return cellAt(pos);
     }
@@ -73,6 +77,17 @@ public:
     }
 
     void forEachCell(std::function<void(Cell&, Position)> callback) {
+        const auto maxSide = getSideSize();
+
+        for (unsigned row = 0; row < maxSide; ++row) {
+            for (unsigned col = 0; col < maxSide; ++col) {
+                Position pos(col, row);
+                callback(cellAt(pos), pos);
+            }
+        }
+    }
+
+    void forEachCell(std::function<void(const Cell&, Position)> callback) const {
         const auto maxSide = getSideSize();
 
         for (unsigned row = 0; row < maxSide; ++row) {

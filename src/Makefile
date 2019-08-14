@@ -1,7 +1,7 @@
 PROGRAMS = tendril
 TESTS = cell_test board_test
 
-COMPILE = g++ -Wall -std=c++17 -Og
+COMPILE = g++ -Wall -std=c++17
 
 all: $(PROGRAMS)
 
@@ -24,7 +24,7 @@ cell_test: cell_test.cpp cell.o
 game_test: game_test.cpp game.o
 	$(COMPILE) -o $@ $^
 
-tendril: board.o cell.o game.o tendril.o
+tendril: board.o boardloader.o cell.o game.o playerview.o tendril.o
 	$(COMPILE) -o $@ $^
 
 %.o: %.cpp %.h

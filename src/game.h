@@ -2,11 +2,7 @@
 
 #include "board.h"
 #include "cell.h"
-
-enum class Player {
-    Blue,
-    Red,
-};
+#include "player.h"
 
 enum class PlaceResult {
     Placed,
@@ -16,7 +12,8 @@ enum class PlaceResult {
 
 class Game {
 public:
-    explicit Game(unsigned boardSize = 10);
+    //explicit Game(Board<Cell>&& board);
+    explicit Game(unsigned size);
 
     PlaceResult placeTendril(Player player, Position position);
 
