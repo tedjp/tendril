@@ -43,7 +43,7 @@ void setRow(Board<Cell>& board, unsigned rowNum, const string& line) {
     }
 
     for (unsigned col = 0; col < line.size(); ++col) {
-        board.cellAt(Position(rowNum, col)).setState(stateFromChar(line[col]));
+        board.cellAt(Position(col, rowNum)).setState(stateFromChar(line[col]));
     }
 }
 } // anon

@@ -14,7 +14,7 @@ public:
 
         for (unsigned row = 0; row < sideSize; ++row) {
             for (unsigned col = 0; col < sideSize; ++col) {
-                *out++ = renderCell(board.cellAt(Position(row, col)));
+                *out++ = renderCell(board.cellAt(Position(col, row)));
             }
 
             *out++ = '\n';
