@@ -22,6 +22,10 @@ Position getMove(Player player) {
 
     cin >> col >> row;
 
+    // Throw away newline. maybe unnecessary
+    string trash;
+    getline(cin, trash);
+
     return positionFromAlpha(col, row);
 }
 
@@ -44,7 +48,7 @@ int main(int argc, char *argv[]) {
 
     cout << "Board size is " << board.sideSize() << "\n";
 #else
-    Board<Cell> board(5);
+    Board<Cell> board(3);
     cout << "Enter start positions (board size=" << board.getSideSize() << ").\n";
     Position blueStart = getMove(Player::Blue);
     Position redStart = getMove(Player::Red);

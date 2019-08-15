@@ -109,6 +109,7 @@ bool Game::isValidMove(Player player, Position position) const {
 
     // Ensure there is connective tissue
     vector<Position> adjacent = board_.positionsAround(position);
+
     for (Position p: adjacent) {
         if (colorMatch(board_.cellAt(p).getColor(), player)) {
             return true;
@@ -124,7 +125,7 @@ Position positionFromAlpha(char col, char row) {
     if (col >= 'A' && col <= 'Z')
         col = 'a' + (col - 'A');
     if (col >= '0' && col <= '9')
-        col = 'a' + (col - '0');
+        col = 'a' + (col - '0') - 1;
 
     if (col < 'a' || col > 'z')
         throw runtime_error(string("Column ") + origCol + " out of range");
@@ -132,7 +133,7 @@ Position positionFromAlpha(char col, char row) {
     if (row < '0' || row > '9')
         throw runtime_error(string("Row ") + row + " out of range");
 
-    return Position(static_cast<unsigned>(col - 'a'), static_cast<unsigned>(row - '0'));
+    return Position(static_cast<unsigned>(col - 'a'), static_cast<unsigned>(row - '0') - 1);
 }
 
 static Player nextPlayer(Player player) {
@@ -178,6 +179,10 @@ void Game::run() {
 
         printResult(result);
         killSeveredCells();
+
+        // Debug:
+        cout << "After your move:\n";
+        StdoutRenderer::renderBoard(makeBoardView(board_, player), cout);
 
         if (!qualifiesForAnotherTurn(result)) {
             player = nextPlayer(player);
