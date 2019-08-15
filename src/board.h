@@ -67,11 +67,6 @@ public:
         return side_size_;
     }
 
-    // FIXME: Delete duplication of this and function above
-    unsigned sideSize() const {
-        return side_size_;
-    }
-
     unsigned numCells() const {
         return cells_.size();
     }
@@ -96,6 +91,59 @@ public:
                 callback(cellAt(pos), pos);
             }
         }
+    }
+
+    bool inRange(Position p) const {
+        const unsigned size = getSideSize();
+        return p.col() < size && p.row() < size;
+    }
+
+    bool inRange(unsigned n) const {
+        return n < getSideSize();
+    }
+
+    std::vector<Position> positionsAround(Position pos) const {
+        std::vector<Position> positions;
+        positions.reserve(4);
+        const unsigned rows[3] = {pos.row() - 1, pos.row(), pos.row() + 1};
+        const unsigned cols[3] = {pos.col() - 1, pos.col(), pos.col() + 1};
+
+        for (unsigned ri = 0; ri < 3; ++ri) {
+            if (!inRange(rows[ri]))
+                continue;
+
+            for (unsigned ci = 0; ci < 3; ++ci) {
+                if (!inRange(cols[ci]))
+                    continue;
+
+                // Skip self-cell
+                if (ci == 1 && ri == 1)
+                    continue;
+
+                // Disallow diagonals
+                if (ci != 1 && ri != 1)
+                    continue;
+
+                positions.emplace_back(rows[ri], cols[ci]);
+            }
+        }
+
+        return positions;
+
+    }
+
+    std::vector<std::reference_wrapper<Cell>> cellsAround(Position pos, std::function<bool(Cell)> predicate = [](Cell){ return true; }) {
+        std::vector<Position> positions = positionsAround(pos);
+        std::vector<std::reference_wrapper<Cell>> cells;
+        cells.reserve(positions.size());
+        for (Position position: positions) {
+            Cell c = cellAt(position);
+            if (predicate(c)) {
+                cells.emplace_back(std::ref(cellAt(position)));
+            }
+        }
+
+        return cells;
     }
 
 private:

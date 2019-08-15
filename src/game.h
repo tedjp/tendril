@@ -10,16 +10,24 @@ enum class PlaceResult {
     DestroyedCortex,
 };
 
+Position positionFromAlpha(char col, char row);
+
 class Game {
 public:
-    //explicit Game(Board<Cell>&& board);
-    explicit Game(unsigned size);
+    using GetMoveCB = Position(*)(Player);
+
+    Game(Board<Cell>&& board, Position blueCortex, Position redCortex, GetMoveCB getMoveCB);
+
+    bool isValidMove(Player player, Position position) const;
 
     PlaceResult placeTendril(Player player, Position position);
+
+    void run();
 
 private:
     void killSeveredCells();
 
     Board<Cell> board_;
     Position blueCortex_, redCortex_;
+    GetMoveCB getMoveCB_;
 };
