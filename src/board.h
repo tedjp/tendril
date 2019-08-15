@@ -105,36 +105,19 @@ public:
     std::vector<Position> positionsAround(Position pos) const {
         std::vector<Position> positions;
         positions.reserve(4);
-        // This results in some duplicates but it's OK.
-        // (Had to introduce them because the inRange() check wasn't working
-        // as desired.)
-        const unsigned rows[3] = {pos.row() > 0 ? pos.row() - 1 : 0, pos.row(), pos.row() + 1 < getSideSize() ? pos.row() + 1 : pos.row()};
-        const unsigned cols[3] = {pos.col() > 0 ? pos.col() - 1 : 0, pos.col(), pos.col() + 1 < getSideSize() ? pos.col() + 1 : pos.col()};
 
-        for (unsigned ri = 0; ri < 3; ++ri) {
-            if (!inRange(rows[ri]))
-                continue;
+        const unsigned size = getSideSize();
 
-            for (unsigned ci = 0; ci < 3; ++ci) {
-                if (!inRange(cols[ci]))
-                    continue;
-
-                // Skip self-cell
-                if (ci == 1 && ri == 1)
-                    continue;
-
-                // Disallow diagonals
-                if (ci != 1 && ri != 1)
-                    continue;
-
-                positions.emplace_back(cols[ci], rows[ci]);
-            }
-        }
-
-        //cerr << "legal positions: " << positions << "\n";
+        if (pos.col() > 0)
+            positions.emplace_back(pos.col() - 1, pos.row());
+        if (pos.col() < size - 1)
+            positions.emplace_back(pos.col() + 1, pos.row());
+        if (pos.row() > 0)
+            positions.emplace_back(pos.col(), pos.row() - 1);
+        if (pos.row() < size - 1)
+            positions.emplace_back(pos.col(), pos.row() + 1);
 
         return positions;
-
     }
 
     std::vector<std::reference_wrapper<Cell>> cellsAround(Position pos, std::function<bool(Cell)> predicate = [](Cell){ return true; }) {
