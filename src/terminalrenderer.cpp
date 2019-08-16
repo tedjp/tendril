@@ -15,7 +15,7 @@ void clearScreen(std::ostream& out) {
 char renderCell(CellView cell) {
     switch (cell.getState()) {
     case CellView::State::Unknown:
-        return ' ';
+        return '_';
     case CellView::State::OurCortex:
         return '@';
     case CellView::State::OurTendril:
