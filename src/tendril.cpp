@@ -9,10 +9,6 @@
 using namespace std;
 
 namespace {
-void usage(ostream& out, const char* argv0) {
-    out << "Usage:   " << argv0 << " <map-filename>\n";
-    out << "Example: " << argv0 << " maps/01.txt\n";
-}
 
 Position getMove(Player player) {
     // TODO: ANSI color codes on the prompt

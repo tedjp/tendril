@@ -2,6 +2,7 @@
 
 #include "board.h"
 #include "cellview.h"
+#include "player.h"
 
 class Renderer {
 public:
@@ -10,7 +11,8 @@ public:
     Renderer(Renderer&&) = default;
     Renderer& operator=(const Renderer&) = default;
     Renderer& operator=(Renderer&&) = default;
-    virtual ~Renderer();
+    virtual ~Renderer() = default;
 
-    virtual void renderBoard(const Board<CellView>& board) = 0;
+    virtual void renderBoard(const Board<CellView>& board, Player player) = 0;
+    virtual void promptForNextPlayer(Player player);
 };

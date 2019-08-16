@@ -1,5 +1,5 @@
 #include "renderer.h"
 
 // Pin vtable
-Renderer::~Renderer()
+void Renderer::promptForNextPlayer(Player)
 {}

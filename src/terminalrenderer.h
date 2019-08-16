@@ -8,9 +8,8 @@ class TerminalRenderer final: public Renderer {
 public:
     TerminalRenderer();
 
-    void renderBoard(const Board<CellView>& board) override;
-
-    static char renderCell(CellView cell);
+    void renderBoard(const Board<CellView>& board, Player player) override;
+    void promptForNextPlayer(Player player) override;
 
 private:
     std::ostream& ostream_;

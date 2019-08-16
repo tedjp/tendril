@@ -188,6 +188,7 @@ void Game::run() {
 
         if (!qualifiesForAnotherTurn(result)) {
             player = nextPlayer(player);
+            renderer_->promptForNextPlayer(player);
         }
     }
 
@@ -196,7 +197,7 @@ void Game::run() {
 
 void Game::renderFor(Player whom) const {
     cout << whom << "'s view:\n";
-    renderer_->renderBoard(makeBoardView(board_, whom));
+    renderer_->renderBoard(makeBoardView(board_, whom), whom);
 }
 
 PlaceResult Game::placeTendril(Player player, Position position) {
