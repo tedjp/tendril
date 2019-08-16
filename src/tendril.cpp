@@ -1,5 +1,7 @@
 #include <iostream>
+#include <random>
 #include <string>
+#include <utility>
 
 #include "boardloader.h"
 #include "game.h"
@@ -9,6 +11,12 @@
 using namespace std;
 
 namespace {
+
+Position randomPosition(unsigned boardSize) {
+    random_device rd;
+    uniform_int_distribution<unsigned> distribution(0, boardSize - 1);
+    return Position(distribution(rd), distribution(rd));
+}
 
 Position getMove(Player player) {
     // TODO: ANSI color codes on the prompt
@@ -25,18 +33,34 @@ Position getMove(Player player) {
     return positionFromAlpha(col, row);
 }
 
+pair<Position, Position> getStartPositions(unsigned boardSize) {
+    Position first = randomPosition(boardSize);
+    Position second = first;
+    while (second == first)
+        second = randomPosition(boardSize);
+
+    return {first, second};
+}
+
 } // anon
 
 int main(int argc, char *argv[]) {
     TerminalRenderer terminalRenderer;
 
-    Board<Cell> board(3);
-    cout << "Enter start positions (board size=" << board.getSideSize() << ").\n";
-    Position blueStart = getMove(Player::Blue);
-    Position redStart = getMove(Player::Red);
-    // TODO: Validate start positions!
+    unsigned boardSize = 3;
+    if (argc > 1)
+        boardSize = stoul(argv[1]);
 
-    Game g(&terminalRenderer, std::move(board), blueStart, redStart, getMove);
+    if (boardSize < 2) {
+        cerr << "Board size must be at least 2\n";
+        return 1;
+    }
+
+    Board<Cell> board(boardSize);
+
+    pair<Position, Position> startPositions = getStartPositions(board.getSideSize());
+
+    Game g(&terminalRenderer, std::move(board), startPositions.first, startPositions.second, getMove);
 
     g.run();
 

@@ -68,8 +68,12 @@ Game::Game(
     redCortex_(redCortex),
     getMoveCB_(getMoveCB)
 {
-    Cell& blueCortexCell = board_.cellAt(blueCortex);
-    Cell& redCortexCell = board_.cellAt(redCortex);
+    initializeBoard();
+}
+
+void Game::initializeBoard() {
+    Cell& blueCortexCell = board_.cellAt(blueCortex_);
+    Cell& redCortexCell = board_.cellAt(redCortex_);
 
     blueCortexCell.setState({Cell::Content::Cortex, Cell::Color::Blue});
     redCortexCell.setState({Cell::Content::Cortex, Cell::Color::Red});

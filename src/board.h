@@ -22,6 +22,10 @@ private:
     unsigned col_, row_;
 };
 
+inline bool operator==(const Position& left, const Position& right) {
+    return left.col() == right.col() && left.row() == right.row();
+}
+
 template <typename CellT>
 class Board {
 public:

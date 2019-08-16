@@ -18,6 +18,9 @@ class Game {
 public:
     using GetMoveCB = Position(*)(Player);
 
+    // Random starting positions
+    Game(Renderer *const renderer, Board<Cell>&& board, GetMoveCB getMoveCB);
+    // Specific starting positions
     Game(Renderer *const renderer, Board<Cell>&& board, Position blueCortex, Position redCortex, GetMoveCB getMoveCB);
 
     bool isValidMove(Player player, Position position) const;
@@ -27,6 +30,7 @@ public:
     void run();
 
 private:
+    void initializeBoard();
     void killSeveredCells();
     void renderFor(Player whom) const;
 
