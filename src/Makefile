@@ -24,7 +24,18 @@ cell_test: cell_test.cpp cell.o
 game_test: game_test.cpp game.o
 	$(COMPILE) -o $@ $^
 
-tendril: board.o boardloader.o cell.o game.o player.o playerview.o tendril.o
+OBJS = \
+	   board.o \
+	   boardloader.o \
+	   cell.o \
+	   game.o \
+	   player.o \
+	   playerview.o \
+	   renderer.o \
+	   tendril.o \
+	   terminalrenderer.o \
+	   #
+tendril: $(OBJS)
 	$(COMPILE) -o $@ $^
 
 %.o: %.cpp %.h

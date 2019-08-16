@@ -42,6 +42,6 @@ public:
     void clear();
 
 private:
-    unsigned color_: 3;
-    unsigned content_: 3;
+    unsigned color_: 2;
+    unsigned content_: 2;
 };

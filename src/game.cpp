@@ -4,7 +4,7 @@
 
 #include "game.h"
 #include "playerview.h"
-#include "stdoutrenderer.h"
+#include "renderer.h"
 
 using namespace std;
 
@@ -56,7 +56,13 @@ static void clearDeadCells(GameBoard& board, vector<bool> okCells) {
 
 } // anon
 
-Game::Game(Board<Cell>&& board, Position blueCortex, Position redCortex, GetMoveCB getMoveCB):
+Game::Game(
+        Renderer *const renderer,
+        Board<Cell>&& board,
+        Position blueCortex,
+        Position redCortex,
+        GetMoveCB getMoveCB):
+    renderer_(renderer),
     board_(std::move(board)),
     blueCortex_(blueCortex),
     redCortex_(redCortex),
@@ -166,9 +172,7 @@ void Game::run() {
     Player player = Player::Blue;
 
     while (board_.cellAt(blueCortex_).isBlue() && board_.cellAt(redCortex_).isRed()) {
-        cout << player << "'s view:\n";
-
-        StdoutRenderer::renderBoard(makeBoardView(board_, player), cout);
+        renderFor(player);
 
         Position position(0, 0);
         do {
@@ -180,9 +184,7 @@ void Game::run() {
         printResult(result);
         killSeveredCells();
 
-        // Debug:
-        cout << "After your move:\n";
-        StdoutRenderer::renderBoard(makeBoardView(board_, player), cout);
+        renderFor(player);
 
         if (!qualifiesForAnotherTurn(result)) {
             player = nextPlayer(player);
@@ -190,6 +192,11 @@ void Game::run() {
     }
 
     cout << "Game over.\n";
+}
+
+void Game::renderFor(Player whom) const {
+    cout << whom << "'s view:\n";
+    renderer_->renderBoard(makeBoardView(board_, whom));
 }
 
 PlaceResult Game::placeTendril(Player player, Position position) {

@@ -12,11 +12,13 @@ enum class PlaceResult {
 
 Position positionFromAlpha(char col, char row);
 
+class Renderer;
+
 class Game {
 public:
     using GetMoveCB = Position(*)(Player);
 
-    Game(Board<Cell>&& board, Position blueCortex, Position redCortex, GetMoveCB getMoveCB);
+    Game(Renderer *const renderer, Board<Cell>&& board, Position blueCortex, Position redCortex, GetMoveCB getMoveCB);
 
     bool isValidMove(Player player, Position position) const;
 
@@ -26,7 +28,9 @@ public:
 
 private:
     void killSeveredCells();
+    void renderFor(Player whom) const;
 
+    Renderer* renderer_;
     Board<Cell> board_;
     Position blueCortex_, redCortex_;
     GetMoveCB getMoveCB_;
