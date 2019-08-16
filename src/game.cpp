@@ -159,7 +159,7 @@ static void printResult(PlaceResult r) {
         cout << "**SMASH** you squashed their tendril\n";
         return;
     case PlaceResult::DestroyedCortex:
-        cout << "Ow my fuckin' eye. You win!\n";
+        cout << "Squelch. That was a BRAIN! You win!\n";
         return;
     default:
         cerr << "Shit's broken, yo.\n";
