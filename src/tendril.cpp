@@ -47,7 +47,9 @@ pair<Position, Position> getStartPositions(unsigned boardSize) {
 int main(int argc, char *argv[]) {
     TerminalRenderer terminalRenderer;
 
-    unsigned boardSize = 3;
+    static const unsigned DEFAULT_BOARD_SIZE = 4;
+
+    unsigned boardSize = DEFAULT_BOARD_SIZE;
     if (argc > 1)
         boardSize = stoul(argv[1]);
 
