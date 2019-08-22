@@ -71,7 +71,7 @@ bool TendrilIsValidMove(
 	TendrilCellPosition position);
 
 DLLEXPORT
-TendrilColor TendrilCurrentPlayer(TendrilGame* game);
+TendrilColor TendrilCurrentPlayer(const TendrilGame* game);
 
 #ifdef __cplusplus
 } // extern "C"

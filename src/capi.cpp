@@ -138,7 +138,7 @@ bool TendrilIsValidMove(
 	return cgame->m_game.isValidMove(PlayerFromC(playerColor), PositionFromC(position));
 }
 
-TendrilColor TendrilCurrentPlayer(TendrilGame* game) {
-	auto cgame = reinterpret_cast<CTendrilGameState*>(game);
+TendrilColor TendrilCurrentPlayer(const TendrilGame* game) {
+	auto cgame = reinterpret_cast<const CTendrilGameState*>(game);
 	return PlayerToC(cgame->m_currentPlayer);
 }
