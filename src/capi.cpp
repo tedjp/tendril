@@ -116,3 +116,12 @@ TendrilPlaceResult PlaceTendril(
 			PlayerFromC(playerColor),
 			PositionFromC(position)));
 }
+
+bool TendrilIsValidMove(
+	TendrilGame* game,
+	TendrilColor playerColor,
+	TendrilCellPosition position)
+{
+	auto cgame = reinterpret_cast<CTendrilGameState*>(game);
+	return cgame->m_game.isValidMove(PlayerFromC(playerColor), PositionFromC(position));
+}

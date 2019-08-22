@@ -63,6 +63,12 @@ TendrilPlaceResult PlaceTendril(
 	TendrilColor playerColor,
 	TendrilCellPosition position);
 
+DLLEXPORT
+bool TendrilIsValidMove(
+	TendrilGame* game,
+	TendrilColor playerColor,
+	TendrilCellPosition position);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
