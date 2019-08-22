@@ -35,6 +35,7 @@ struct TendrilCellPosition {
 };
 
 enum TendrilPlaceResult {
+	NO_CHANGE,
 	TENDRIL_PLACED,
 	DESTROYED_TENDRIL,
 	DESTROYED_CORTEX,
@@ -68,6 +69,9 @@ bool TendrilIsValidMove(
 	TendrilGame* game,
 	TendrilColor playerColor,
 	TendrilCellPosition position);
+
+DLLEXPORT
+TendrilColor TendrilCurrentPlayer(TendrilGame* game);
 
 #ifdef __cplusplus
 } // extern "C"

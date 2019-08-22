@@ -5,6 +5,7 @@
 #include "player.h"
 
 enum class PlaceResult {
+	NoChange, // played on an existing owned location
     Placed,
     DestroyedTendril,
     DestroyedCortex,
@@ -34,6 +35,9 @@ public:
     void run();
 
 	const Board<Cell>& board() const;
+
+	static bool qualifiesForAnotherTurn(PlaceResult placeResult);
+	static Player playerAfter(Player player);
 
 private:
     void initializeBoard();

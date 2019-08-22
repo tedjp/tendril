@@ -19,6 +19,7 @@ public:
 
 	Game m_game;
 	std::vector<uint8_t> m_playerView;
+	Player m_currentPlayer = Player::Blue;
 };
 
 CTendrilGameState::CTendrilGameState(unsigned sideSize) :
@@ -46,6 +47,13 @@ void TranslateBoardViewToVector(const Board<CellView>& view, vector<uint8_t>& ve
 	for (unsigned i = 0; i < sideSize; ++i) {
 		vec[i] = CellViewToUint8(view.cellAt(Position(i % sideSize, i / sideSize)));
 	}
+}
+
+TendrilColor PlayerToC(Player player) {
+	if (player == Player::Blue)
+		return TENDRIL_COLOR_BLUE;
+	else
+		return TENDRIL_COLOR_RED;
 }
 
 Player PlayerFromC(TendrilColor color) {
@@ -111,10 +119,14 @@ TendrilPlaceResult PlaceTendril(
 {
 	CTendrilGameState* cgame = reinterpret_cast<CTendrilGameState*>(game);
 
-	return PlaceResultToC(
-		cgame->m_game.placeTendril(
-			PlayerFromC(playerColor),
-			PositionFromC(position)));
+	PlaceResult result = cgame->m_game.placeTendril(
+		PlayerFromC(playerColor),
+		PositionFromC(position));
+
+	if (!Game::qualifiesForAnotherTurn(result))
+		cgame->m_currentPlayer = Game::playerAfter(cgame->m_currentPlayer);
+
+	return PlaceResultToC(result);
 }
 
 bool TendrilIsValidMove(
@@ -124,4 +136,9 @@ bool TendrilIsValidMove(
 {
 	auto cgame = reinterpret_cast<CTendrilGameState*>(game);
 	return cgame->m_game.isValidMove(PlayerFromC(playerColor), PositionFromC(position));
+}
+
+TendrilColor TendrilCurrentPlayer(TendrilGame* game) {
+	auto cgame = reinterpret_cast<CTendrilGameState*>(game);
+	return PlayerToC(cgame->m_currentPlayer);
 }

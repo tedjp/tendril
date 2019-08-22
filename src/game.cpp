@@ -98,6 +98,20 @@ void Game::reassignCortexes() {
 	redCortex_ = newCortexes.second;
 }
 
+// static
+bool Game::qualifiesForAnotherTurn(PlaceResult placeResult) {
+	return placeResult == PlaceResult::NoChange
+		|| placeResult == PlaceResult::DestroyedTendril;
+}
+
+// static
+Player Game::playerAfter(Player player) {
+	if (player == Player::Blue)
+		return Player::Red;
+	else
+		return Player::Blue;
+}
+
 void Game::killSeveredCells() {
     vector<bool> okCells;
     okCells.resize(board_.numCells());
@@ -165,10 +179,6 @@ Position positionFromAlpha(char col, char row) {
     return Position(static_cast<unsigned>(col - 'a'), static_cast<unsigned>(row - '0') - 1);
 }
 
-static Player nextPlayer(Player player) {
-    return static_cast<Player>(!static_cast<unsigned>(player));
-}
-
 static void printResult(PlaceResult r) {
     switch (r) {
     case PlaceResult::Placed:
@@ -184,10 +194,6 @@ static void printResult(PlaceResult r) {
         cerr << "Shit's broken, yo.\n";
         return;
     }
-}
-
-static bool qualifiesForAnotherTurn(PlaceResult placeResult) {
-    return placeResult == PlaceResult::DestroyedTendril || placeResult == PlaceResult::DestroyedCortex;
 }
 
 void Game::run() {
@@ -210,7 +216,7 @@ void Game::run() {
         renderFor(player);
 
         if (!qualifiesForAnotherTurn(result)) {
-            player = nextPlayer(player);
+            player = playerAfter(player);
             renderer_->promptForNextPlayer(player);
         }
     }
@@ -223,8 +229,18 @@ void Game::renderFor(Player whom) const {
     renderer_->renderBoard(makeBoardView(board_, whom), whom);
 }
 
+namespace {
+bool playerColorMatchesCell(Player player, Cell cell) {
+	return (cell.getColor() == Cell::Color::Red && player == Player::Red)
+		|| (cell.getColor() == Cell::Color::Blue && player == Player::Blue);
+}
+}
+
 PlaceResult Game::placeTendril(Player player, Position position) {
     Cell& cell = board_.cellAt(position);
+
+	if (playerColorMatchesCell(player, cell))
+		return PlaceResult::NoChange;
 
     auto result = PlaceResult::Placed;
 
