@@ -81,7 +81,8 @@ TendrilGame* NewTendrilGame(unsigned sideSize) {
 }
 
 void FreeTendrilGame(TendrilGame* game) {
-	free(game);
+	CTendrilGameState* cgame = reinterpret_cast<CTendrilGameState*>(game);
+	delete cgame;
 }
 
 Player PlayerFromColor(TendrilColor color) {
