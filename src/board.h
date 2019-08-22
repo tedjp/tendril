@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <utility>
 #include <vector>
 
 class Position final {
@@ -25,6 +26,10 @@ private:
 inline bool operator==(const Position& left, const Position& right) {
     return left.col() == right.col() && left.row() == right.row();
 }
+
+Position randomPosition(unsigned boardSize);
+
+std::pair<Position, Position> getStartPositions(unsigned boardSize);
 
 template <typename CellT>
 class Board {

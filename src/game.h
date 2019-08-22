@@ -16,11 +16,15 @@ class Renderer;
 
 class Game {
 public:
+	// XXX: Move to Engine
     using GetMoveCB = Position(*)(Player);
 
     // Random starting positions
+	// XXX: Move renderer & getMoveCB to Engine
     Game(Renderer *const renderer, Board<Cell>&& board, GetMoveCB getMoveCB);
+
     // Specific starting positions
+	// XXX: Move renderer & getMoveCB to Engine
     Game(Renderer *const renderer, Board<Cell>&& board, Position blueCortex, Position redCortex, GetMoveCB getMoveCB);
 
     bool isValidMove(Player player, Position position) const;
@@ -29,8 +33,11 @@ public:
 
     void run();
 
+	const Board<Cell>& board() const;
+
 private:
     void initializeBoard();
+    void reassignCortexes();
     void killSeveredCells();
     void renderFor(Player whom) const;
 
@@ -39,3 +46,7 @@ private:
     Position blueCortex_, redCortex_;
     GetMoveCB getMoveCB_;
 };
+
+inline const Board<Cell>& Game::board() const {
+	return board_;
+}

@@ -22,6 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{A24B9850-E580-417E-B253-5FB2EEF2C7D8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -35,7 +36,7 @@
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
@@ -100,6 +101,7 @@
   <ItemGroup>
     <ClCompile Include="src\board.cpp" />
     <ClCompile Include="src\boardloader.cpp" />
+    <ClCompile Include="src\capi.cpp" />
     <ClCompile Include="src\cell.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\player.cpp" />
@@ -111,6 +113,7 @@
   <ItemGroup>
     <ClInclude Include="src\board.h" />
     <ClInclude Include="src\boardloader.h" />
+    <ClInclude Include="src\capi.h" />
     <ClInclude Include="src\cell.h" />
     <ClInclude Include="src\cellview.h" />
     <ClInclude Include="src\game.h" />

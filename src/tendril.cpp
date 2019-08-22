@@ -1,5 +1,4 @@
 #include <iostream>
-#include <random>
 #include <string>
 #include <utility>
 
@@ -9,14 +8,6 @@
 #include "terminalrenderer.h"
 
 using namespace std;
-
-namespace {
-
-Position randomPosition(unsigned boardSize) {
-    random_device rd;
-    uniform_int_distribution<unsigned> distribution(0, boardSize - 1);
-    return Position(distribution(rd), distribution(rd));
-}
 
 Position getMove(Player player) {
     // TODO: ANSI color codes on the prompt
@@ -33,17 +24,7 @@ Position getMove(Player player) {
     return positionFromAlpha(col, row);
 }
 
-pair<Position, Position> getStartPositions(unsigned boardSize) {
-    Position first = randomPosition(boardSize);
-    Position second = first;
-    while (second == first)
-        second = randomPosition(boardSize);
-
-    return {first, second};
-}
-
-} // anon
-
+#if 0 // Disabled for library build (Windows)
 int main(int argc, char *argv[]) {
     TerminalRenderer terminalRenderer;
 
@@ -68,3 +49,4 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
+#endif

@@ -71,12 +71,31 @@ Game::Game(
     initializeBoard();
 }
 
+Game::Game(Renderer* const renderer, Board<Cell>&& board, GetMoveCB getMoveCB):
+	renderer_(renderer),
+	board_(move(board)),
+	blueCortex_(randomPosition(board.getSideSize())),
+	redCortex_(randomPosition(board.getSideSize())),
+	getMoveCB_(getMoveCB)
+{
+	initializeBoard();
+}
+
 void Game::initializeBoard() {
+	if (blueCortex_ == redCortex_)
+		reassignCortexes();
+
     Cell& blueCortexCell = board_.cellAt(blueCortex_);
     Cell& redCortexCell = board_.cellAt(redCortex_);
 
     blueCortexCell.setState({Cell::Content::Cortex, Cell::Color::Blue});
     redCortexCell.setState({Cell::Content::Cortex, Cell::Color::Red});
+}
+
+void Game::reassignCortexes() {
+	pair<Position, Position> newCortexes = getStartPositions(board_.getSideSize());
+	blueCortex_ = newCortexes.first;
+	redCortex_ = newCortexes.second;
 }
 
 void Game::killSeveredCells() {
@@ -91,7 +110,7 @@ void Game::killSeveredCells() {
 
 namespace {
 bool canPlaceTendril(Player player, Cell c) {
-    if (c.getContent() == Cell::Content::Empty)
+    if (c.isEmpty())
         return true;
 
     if (c.getColor() == Cell::Color::Red && player == Player::Blue)
