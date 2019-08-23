@@ -42,7 +42,7 @@ uint8_t CellViewToUint8(CellView cellView) {
 void TranslateBoardViewToVector(const Board<CellView>& view, vector<uint8_t>& vec) {
 	const unsigned sideSize = view.getSideSize();
 
-	assert(vec.size() == sideSize);
+	assert(vec.size() == sideSize * static_cast<size_t>(sideSize));
 
 	for (unsigned i = 0; i < sideSize; ++i) {
 		vec[i] = CellViewToUint8(view.cellAt(Position(i % sideSize, i / sideSize)));
