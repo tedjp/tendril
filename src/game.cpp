@@ -237,6 +237,9 @@ bool playerColorMatchesCell(Player player, Cell cell) {
 }
 
 PlaceResult Game::placeTendril(Player player, Position position) {
+    if (!isValidMove(player, position))
+        return PlaceResult::NoChange;
+        
     Cell& cell = board_.cellAt(position);
 
 	if (playerColorMatchesCell(player, cell))
