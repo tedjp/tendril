@@ -70,6 +70,9 @@ Position PositionFromC(TendrilCellPosition cposition) {
 
 TendrilPlaceResult PlaceResultToC(PlaceResult placeResult) {
 	switch (placeResult) {
+    default:
+    case PlaceResult::NoChange:
+        return NO_CHANGE;
 	case PlaceResult::Placed:
 		return TENDRIL_PLACED;
 	case PlaceResult::DestroyedCortex:

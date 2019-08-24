@@ -1,6 +1,6 @@
 #pragma once
 
-#include "board.h"
+#include <stdbool.h>
 
 #ifdef _MSC_VER
 # define DLLEXPORT __declspec(dllexport)
@@ -55,23 +55,25 @@ void FreeTendrilGame(TendrilGame* game);
 // Does *not* indicate the color, since only cells visible to the requested
 // player are returned.
 DLLEXPORT
-const uint8_t* TendrilGameView(TendrilGame* game, TendrilColor playerColor);
+const unsigned char* TendrilGameView(
+        TendrilGame* game,
+        enum TendrilColor playerColor);
 
 // Place a tendril for the given player at the given location.
 DLLEXPORT
-TendrilPlaceResult PlaceTendril(
+enum TendrilPlaceResult PlaceTendril(
 	TendrilGame* game,
-	TendrilColor playerColor,
-	TendrilCellPosition position);
+	enum TendrilColor playerColor,
+	struct TendrilCellPosition position);
 
 DLLEXPORT
 bool TendrilIsValidMove(
 	TendrilGame* game,
-	TendrilColor playerColor,
-	TendrilCellPosition position);
+	enum TendrilColor playerColor,
+	struct TendrilCellPosition position);
 
 DLLEXPORT
-TendrilColor TendrilCurrentPlayer(const TendrilGame* game);
+enum TendrilColor TendrilCurrentPlayer(const TendrilGame* game);
 
 #ifdef __cplusplus
 } // extern "C"
