@@ -15,7 +15,7 @@ void clearScreen(std::ostream& out) {
 char renderCell(CellView cell) {
     switch (cell.getState()) {
     case CellView::State::Unknown:
-        return '_';
+        return ' ';
     case CellView::State::OurCortex:
         return '@';
     case CellView::State::OurTendril:
@@ -23,6 +23,13 @@ char renderCell(CellView cell) {
     default:
         return '?';
     }
+}
+
+void printRowSeparator(ostream& out, unsigned cols) {
+    out << '+';
+    for (unsigned i = 0; i < cols; ++i)
+        out << "-+";
+    out << '\n';
 }
 
 } // anon
@@ -38,12 +45,18 @@ void TextUI::renderBoard(const Board<CellView>& board, Player player) {
     const unsigned sideSize = board.getSideSize();
 
     for (unsigned row = 0; row < sideSize; ++row) {
+        printRowSeparator(ostream_, sideSize);
+
+        ostream_ << '|';
+
         for (unsigned col = 0; col < sideSize; ++col) {
-            ostream_ << renderCell(board.cellAt(Position(col, row)));
+            ostream_ << renderCell(board.cellAt(Position(col, row))) << '|';
         }
 
         ostream_ << '\n';
     }
+
+    printRowSeparator(ostream_, sideSize);
 }
 
 void TextUI::promptForNextPlayer(Player player) {
