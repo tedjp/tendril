@@ -2,7 +2,6 @@
 #include <stdexcept>
 
 #include "game.h"
-#include "playerview.h"
 
 using namespace std;
 
