@@ -25,8 +25,16 @@ char renderCell(CellView cell) {
     }
 }
 
+// BUG: This only lines up properly for up to 8 columns (1-9)
+void printColNumbers(ostream& out, unsigned cols) {
+    out << ' ';
+    for (unsigned i = 0; i < cols; ++i)
+        out << ' ' << to_string(i + 1);
+    out << '\n';
+}
+
 void printRowSeparator(ostream& out, unsigned cols) {
-    out << '+';
+    out << " +";
     for (unsigned i = 0; i < cols; ++i)
         out << "-+";
     out << '\n';
@@ -44,10 +52,12 @@ void TextUI::renderBoard(const Board<CellView>& board, Player player) {
 
     const unsigned sideSize = board.getSideSize();
 
+    printColNumbers(ostream_, sideSize);
+
     for (unsigned row = 0; row < sideSize; ++row) {
         printRowSeparator(ostream_, sideSize);
 
-        ostream_ << '|';
+        ostream_ << to_string(row + 1) << '|';
 
         for (unsigned col = 0; col < sideSize; ++col) {
             ostream_ << renderCell(board.cellAt(Position(col, row))) << '|';
