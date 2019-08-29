@@ -78,7 +78,7 @@ void TextUI::indicateResult(PlaceResult r) {
         cout << "**SMASH** you squashed their tendril\n";
         return;
     case PlaceResult::DestroyedCortex:
-        cout << "Squelch. That was a BRAIN! You win!\n";
+        cout << "Squelch. That was the CORTEX. You win!\n";
         return;
     default:
         cerr << "Shit's broken, yo.\n";
