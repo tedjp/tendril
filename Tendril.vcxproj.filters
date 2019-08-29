@@ -25,13 +25,10 @@
     <ClCompile Include="src\playerview.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer.cpp">
+    <ClCompile Include="src\ui.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\tendril.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\terminalrenderer.cpp">
+    <ClCompile Include="src\textui.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="src\capi.cpp">
@@ -60,13 +57,10 @@
     <ClInclude Include="src\playerview.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer.h">
+    <ClInclude Include="src\ui.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="src\tendril.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="src\terminalrenderer.h">
+    <ClInclude Include="src\textui.h">
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="src\capi.h">

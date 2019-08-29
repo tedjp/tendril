@@ -3,30 +3,15 @@
 #include <utility>
 
 #include "boardloader.h"
+#include "engine.h"
 #include "game.h"
 #include "playerview.h"
-#include "terminalrenderer.h"
+#include "textui.h"
 
 using namespace std;
 
-Position getMove(Player player) {
-    // TODO: ANSI color codes on the prompt
-    cout << player << "'s move? ";
-
-    char col, row;
-
-    cin >> col >> row;
-
-    // Throw away newline. maybe unnecessary
-    string trash;
-    getline(cin, trash);
-
-    return positionFromAlpha(col, row);
-}
-
-#if 0 // Disabled for library build (Windows)
 int main(int argc, char *argv[]) {
-    TerminalRenderer terminalRenderer;
+    TextUI textUI;
 
     static const unsigned DEFAULT_BOARD_SIZE = 4;
 
@@ -43,10 +28,9 @@ int main(int argc, char *argv[]) {
 
     pair<Position, Position> startPositions = getStartPositions(board.getSideSize());
 
-    Game g(&terminalRenderer, std::move(board), startPositions.first, startPositions.second, getMove);
+    Game game(std::move(board), startPositions.first, startPositions.second);
 
-    g.run();
+    Engine().run(game, textUI);
 
     return 0;
 }
-#endif

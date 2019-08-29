@@ -29,12 +29,13 @@ OBJS = \
 	   board.o \
 	   boardloader.o \
 	   cell.o \
+	   engine.o \
 	   game.o \
 	   player.o \
 	   playerview.o \
-	   renderer.o \
 	   tendril.o \
-	   terminalrenderer.o \
+	   textui.o \
+	   ui.o \
 	   #
 tendril: $(OBJS)
 	$(COMPILE) -o $@ $^

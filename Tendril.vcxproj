@@ -106,9 +106,8 @@
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\playerview.cpp" />
-    <ClCompile Include="src\renderer.cpp" />
-    <ClCompile Include="src\tendril.cpp" />
-    <ClCompile Include="src\terminalrenderer.cpp" />
+    <ClCompile Include="src\textui.cpp" />
+    <ClCompile Include="src\ui.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\board.h" />
@@ -119,9 +118,8 @@
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\player.h" />
     <ClInclude Include="src\playerview.h" />
-    <ClInclude Include="src\renderer.h" />
-    <ClInclude Include="src\tendril.h" />
-    <ClInclude Include="src\terminalrenderer.h" />
+    <ClInclude Include="src\textui.h" />
+    <ClInclude Include="src\ui.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

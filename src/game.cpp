@@ -1,10 +1,8 @@
 #include <algorithm>
-#include <iostream> // lazy!
 #include <stdexcept>
 
 #include "game.h"
 #include "playerview.h"
-#include "renderer.h"
 
 using namespace std;
 
@@ -56,27 +54,18 @@ static void clearDeadCells(GameBoard& board, vector<bool> okCells) {
 
 } // anon
 
-Game::Game(
-        Renderer *const renderer,
-        Board<Cell>&& board,
-        Position blueCortex,
-        Position redCortex,
-        GetMoveCB getMoveCB):
-    renderer_(renderer),
+Game::Game(Board<Cell>&& board, Position blueCortex, Position redCortex):
     board_(std::move(board)),
     blueCortex_(blueCortex),
-    redCortex_(redCortex),
-    getMoveCB_(getMoveCB)
+    redCortex_(redCortex)
 {
     initializeBoard();
 }
 
-Game::Game(Renderer* const renderer, Board<Cell>&& board, GetMoveCB getMoveCB):
-	renderer_(renderer),
+Game::Game(Board<Cell>&& board):
 	board_(move(board)),
 	blueCortex_(randomPosition(board.getSideSize())),
-	redCortex_(randomPosition(board.getSideSize())),
-	getMoveCB_(getMoveCB)
+	redCortex_(randomPosition(board.getSideSize()))
 {
 	initializeBoard();
 }
@@ -179,56 +168,6 @@ Position positionFromAlpha(char col, char row) {
     return Position(static_cast<unsigned>(col - 'a'), static_cast<unsigned>(row - '0') - 1);
 }
 
-static void printResult(PlaceResult r) {
-    switch (r) {
-    case PlaceResult::Placed:
-        cout << "OK, you grew your tendril.\n";
-        return;
-    case PlaceResult::DestroyedTendril:
-        cout << "**SMASH** you squashed their tendril\n";
-        return;
-    case PlaceResult::DestroyedCortex:
-        cout << "Squelch. That was a BRAIN! You win!\n";
-        return;
-    default:
-        cerr << "Shit's broken, yo.\n";
-        return;
-    }
-}
-
-void Game::run() {
-    // TODO: Randomize first player.
-    Player player = Player::Blue;
-
-    while (board_.cellAt(blueCortex_).isBlue() && board_.cellAt(redCortex_).isRed()) {
-        renderFor(player);
-
-        Position position(0, 0);
-        do {
-            position = getMoveCB_(player);
-        } while (!isValidMove(player, position));
-
-        PlaceResult result = placeTendril(player, position);
-
-        printResult(result);
-        killSeveredCells();
-
-        renderFor(player);
-
-        if (!qualifiesForAnotherTurn(result)) {
-            player = playerAfter(player);
-            renderer_->promptForNextPlayer(player);
-        }
-    }
-
-    cout << "Game over.\n";
-}
-
-void Game::renderFor(Player whom) const {
-    cout << whom << "'s view:\n";
-    renderer_->renderBoard(makeBoardView(board_, whom), whom);
-}
-
 namespace {
 bool playerColorMatchesCell(Player player, Cell cell) {
 	return (cell.getColor() == Cell::Color::Red && player == Player::Red)
@@ -254,5 +193,20 @@ PlaceResult Game::placeTendril(Player player, Position position) {
 
     cell.setState({Cell::Content::Tendril, player == Player::Red ? Cell::Color::Red : Cell::Color::Blue});
 
+    killSeveredCells();
+
     return result;
+}
+
+bool Game::isOver() const {
+    return !board_.cellAt(blueCortex_).isBlue() || !board_.cellAt(redCortex_).isRed();
+}
+
+Player Game::winner() const {
+    if (board_.cellAt(blueCortex_).isRed())
+        return Player::Red;
+    else if (board_.cellAt(redCortex_).isBlue())
+        return Player::Blue;
+    else
+        throw logic_error("Game is not over yet");
 }

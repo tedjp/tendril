@@ -17,27 +17,23 @@ class Renderer;
 
 class Game {
 public:
-	// XXX: Move to Engine
-    using GetMoveCB = Position(*)(Player);
-
     // Random starting positions
-	// XXX: Move renderer & getMoveCB to Engine
-    Game(Renderer *const renderer, Board<Cell>&& board, GetMoveCB getMoveCB);
+    Game(Board<Cell>&& board);
 
     // Specific starting positions
-	// XXX: Move renderer & getMoveCB to Engine
-    Game(Renderer *const renderer, Board<Cell>&& board, Position blueCortex, Position redCortex, GetMoveCB getMoveCB);
+    Game(Board<Cell>&& board, Position blueCortex, Position redCortex);
 
     bool isValidMove(Player player, Position position) const;
 
     PlaceResult placeTendril(Player player, Position position);
 
-    void run();
-
 	const Board<Cell>& board() const;
 
 	static bool qualifiesForAnotherTurn(PlaceResult placeResult);
 	static Player playerAfter(Player player);
+
+    bool isOver() const;
+    Player winner() const; // throws unless isOver() == true
 
 private:
     void initializeBoard();
@@ -45,10 +41,8 @@ private:
     void killSeveredCells();
     void renderFor(Player whom) const;
 
-    Renderer* renderer_;
     Board<Cell> board_;
     Position blueCortex_, redCortex_;
-    GetMoveCB getMoveCB_;
 };
 
 inline const Board<Cell>& Game::board() const {
