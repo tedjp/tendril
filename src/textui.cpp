@@ -8,7 +8,7 @@ using namespace std;
 namespace {
 
 void clearScreen(std::ostream& out) {
-    static const std::string newlines(24, '\n');
+    static const std::string newlines(31, '\n');
     out.write(newlines.data(), newlines.size());
 }
 
