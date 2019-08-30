@@ -39,7 +39,6 @@ private:
     void initializeBoard();
     void reassignCortexes();
     void killSeveredCells();
-    void renderFor(Player whom) const;
 
     Board<Cell> board_;
     Position blueCortex_, redCortex_;
