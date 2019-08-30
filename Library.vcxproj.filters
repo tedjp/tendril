@@ -10,9 +10,6 @@
     <ClCompile Include="src\board.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\boardloader.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="src\cell.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -25,21 +22,12 @@
     <ClCompile Include="src\playerview.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\ui.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\textui.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\capi.cpp">
+    <ClCompile Include="src\boardloader.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\board.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="src\boardloader.h">
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="src\cell.h">
@@ -57,13 +45,7 @@
     <ClInclude Include="src\playerview.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="src\ui.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="src\textui.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="src\capi.h">
+    <ClInclude Include="src\boardloader.h">
       <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>
