@@ -23,7 +23,7 @@ public:
 };
 
 CTendrilGameState::CTendrilGameState(unsigned sideSize) :
-	m_game(nullptr, Board<Cell>(sideSize), nullptr),
+	m_game(Board<Cell>(sideSize)),
 	m_playerView(sideSize * static_cast<size_t>(sideSize), 0)
 {}
 
