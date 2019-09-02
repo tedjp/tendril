@@ -13,8 +13,6 @@ enum class PlaceResult {
 
 Position positionFromAlpha(char col, char row);
 
-class Renderer;
-
 class Game {
 public:
     // Random starting positions
